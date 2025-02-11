@@ -22,6 +22,5 @@ WHERE {
     # FILTER(STRSTARTS(?oldLiteral, "http://purl.bioontology.org/ontology/SNOMEDCT/"))  # Match SNOMEDCT literals
     BIND(IRI(?oldLiteral) AS ?correctURI)  # Convert to a proper URI
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/>,
-        <https://www.bgee.org/sparql/>, <https://sparql.omabrowser.org/sparql/> .
+    schema:target <http://localhost:7200/sparql> .
 
