@@ -10,12 +10,7 @@ ex:001 a sh:SPARQLExecutable,
     sh:select """
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-DELETE {
-    ?subject skos:exactMatch ?oldLiteral .
-}
-INSERT {
-    ?subject skos:exactMatch ?correctURI .
-}
+SELECT *
 WHERE {
     ?subject skos:exactMatch ?oldLiteral .
     FILTER(isLiteral(?oldLiteral))  # Ensure it's a literal
