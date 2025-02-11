@@ -14,7 +14,8 @@ SELECT *
 WHERE {
     ?subject skos:exactMatch ?oldLiteral .
     FILTER(isLiteral(?oldLiteral))  # Ensure it's a literal
-        BIND(IRI(?oldLiteral) AS ?correctURI)  # Convert to a proper URI
+    FILTER(STRSTARTS(?oldLiteral, "http://purl.bioontology.org/ontology/SNOMEDCT/"))  # Match SNOMEDCT literals
+    BIND(IRI(?oldLiteral) AS ?correctURI)  # Convert to a proper URI
 }""" ;
     schema:target <http://localhost:7200/sparql> .
 
