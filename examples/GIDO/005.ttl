@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:004 a sh:SPARQLExecutable,
+ex:005 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Berekent de gemiddelde waarden voor het netto gewicht per stuk en de milieueffecten per kilo, waaronder landgebruik, koolstofvoetafdruk en waterverbruik van handschoenen."@nl ;
     sh:prefixes _:sparql_examples_prefixes ;
