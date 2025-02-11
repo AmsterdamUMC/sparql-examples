@@ -1,0 +1,31 @@
+@prefix ex: <https://www.bgee.org/sparql/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:004 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Berekent de gemiddelde waarden voor het netto gewicht per stuk en de milieueffecten per kilo, waaronder landgebruik, koolstofvoetafdruk en waterverbruik van handschoenen."@nl ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX ns1: <http://example.org/>
+PREFIX gido: <http://www.semanticweb.org/gido#>
+
+SELECT
+(AVG(?nettoGewichtPerStuk) AS ?avgnettoGewichtPerStuk)
+    (AVG(?gebruikLandbouwGrond) AS ?avgGebruikLandbouwGrond)
+    (AVG(?koolstofVoetafdruk) AS ?avgKoolstofVoetafdruk)
+    (AVG(?WaterGebruik) AS ?avgWaterGebruik)
+WHERE {
+    ?s rdf:type gido:Glove ;
+       ns1:Netto_gewicht_per_stuk__kg_ ?nettoGewichtPerStuk ;
+       ns1:Gebruik_landbouwgrond__m2___kg_ ?gebruikLandbouwGrond ;
+       ns1:Koolstofvoetafdruk__CO2_eq___kg_ ?koolstofVoetafdruk ;
+       ns1:Water_gebruik__m3___kg_ ?WaterGebruik .
+}
+        """ ;
+    schema:target <http://localhost:7200/sparql> .
+
+
