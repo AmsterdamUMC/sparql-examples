@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:001 a sh:SPARQLExecutable,
+ex:002 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Find SnomedURIs stored as Literals"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
