@@ -1,0 +1,53 @@
+@prefix ex: <https://www.bgee.org/sparql/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:001 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Maandelijkse aantallen met procentuele verdeling per item"@nl ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX gido: <http://www.semanticweb.org/gido#>
+PREFIX ex: <http://example.org/ex#>
+
+SELECT ?s ?omschrijving
+       ?jan (CONCAT(STR(ROUND((?jan * 100.0 / ?total) * 100) / 100), "%") AS ?jan_pct)
+       ?feb (CONCAT(STR(ROUND((?feb * 100.0 / ?total) * 100) / 100), "%") AS ?feb_pct)
+       ?mar (CONCAT(STR(ROUND((?mar * 100.0 / ?total) * 100) / 100), "%") AS ?mar_pct)
+       ?apr (CONCAT(STR(ROUND((?apr * 100.0 / ?total) * 100) / 100), "%") AS ?apr_pct)
+       ?may (CONCAT(STR(ROUND((?may * 100.0 / ?total) * 100) / 100), "%") AS ?may_pct)
+       ?jun (CONCAT(STR(ROUND((?jun * 100.0 / ?total) * 100) / 100), "%") AS ?jun_pct)
+       ?jul (CONCAT(STR(ROUND((?jul * 100.0 / ?total) * 100) / 100), "%") AS ?jul_pct)
+       ?aug (CONCAT(STR(ROUND((?aug * 100.0 / ?total) * 100) / 100), "%") AS ?aug_pct)
+       ?sep (CONCAT(STR(ROUND((?sep * 100.0 / ?total) * 100) / 100), "%") AS ?sep_pct)
+       ?oct (CONCAT(STR(ROUND((?oct * 100.0 / ?total) * 100) / 100), "%") AS ?oct_pct)
+       ?nov (CONCAT(STR(ROUND((?nov * 100.0 / ?total) * 100) / 100), "%") AS ?nov_pct)
+       ?dec (CONCAT(STR(ROUND((?dec * 100.0 / ?total) * 100) / 100), "%") AS ?dec_pct)
+WHERE {
+    {
+        SELECT ?s ?omschrijving ?jan ?feb ?mar ?apr ?may ?jun ?jul ?aug ?sep ?oct ?nov ?dec
+               (SUM(?jan + ?feb + ?mar + ?apr + ?may + ?jun + ?jul + ?aug + ?sep + ?oct + ?nov + ?dec) AS ?total)
+        WHERE {
+            ?s rdf:type gido:Glove ;
+               ex:Omschrijving_artikel_intern ?omschrijving ;
+               ex:jan ?jan ;
+               ex:feb ?feb ;
+               ex:mar ?mar ;
+               ex:apr ?apr ;
+               ex:may ?may ;
+               ex:jun ?jun ;
+               ex:jul ?jul ;
+               ex:aug ?aug ;
+               ex:sep ?sep ;
+               ex:oct ?oct ;
+               ex:nov ?nov ;
+               ex:dec ?dec .
+        }
+        GROUP BY ?s ?omschrijving ?jan ?feb ?mar ?apr ?may ?jun ?jul ?aug ?sep ?oct ?nov ?dec
+    }
+}""" ;
+    schema:target <http://localhost:7200/sparql> .
+
+
