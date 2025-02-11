@@ -1,0 +1,62 @@
+@prefix ex: <https://www.bgee.org/sparql/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:004 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Berekent de gemiddelde waarden voor het netto gewicht per stuk en de milieueffecten per kilo, waaronder landgebruik, koolstofvoetafdruk en waterverbruik van handschoenen."@nl ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX gido: <http://www.semanticweb.org/gido#>
+PREFIX ex: <http://example.org/ex#>
+PREFIX ns1: <http://example.org/ex#>
+
+SELECT DISTINCT ?omschrijving
+       ?jan
+       (?jan * ?avgNettoGewichtPerStuk AS ?jan_weight)
+       (?jan_weight * ?avgKoolstofVoetafdruk AS ?jan_CO2)
+       (?jan_weight * ?avgWaterGebruik AS ?jan_water)
+       (?jan_weight * ?avgGebruikLandbouwGrond AS ?jan_land)
+       ?feb (CONCAT(STR(ROUND((?feb * 100.0 / ?total) * 100) / 100), "%") AS ?feb_pct)
+       (?feb * ?avgNettoGewichtPerStuk AS ?feb_weight)
+       (?feb_weight * ?avgKoolstofVoetafdruk AS ?feb_CO2)
+       (?feb_weight * ?avgWaterGebruik AS ?feb_water)
+       (?feb_weight * ?avgGebruikLandbouwGrond AS ?feb_land)
+       ?mar (CONCAT(STR(ROUND((?mar * 100.0 / ?total) * 100) / 100), "%") AS ?mar_pct)
+       (?mar * ?avgNettoGewichtPerStuk AS ?mar_weight)
+       (?mar_weight * ?avgKoolstofVoetafdruk AS ?mar_CO2)
+       (?mar_weight * ?avgWaterGebruik AS ?mar_water)
+       (?mar_weight * ?avgGebruikLandbouwGrond AS ?mar_land)
+WHERE {
+    {
+        SELECT ?s ?omschrijving ?jan ?feb ?mar
+               (SUM(?jan + ?feb + ?mar) AS ?total)
+        WHERE {
+            ?s rdf:type gido:Glove ;
+               ns1:Omschrijving_artikel_intern ?omschrijving ;
+               ex:jan ?jan ;
+               ex:feb ?feb ;
+               ex:mar ?mar .
+        }
+        GROUP BY ?s ?omschrijving ?jan ?feb ?mar
+    }
+    {
+        SELECT
+               (AVG(?nettoGewichtPerStuk) AS ?avgNettoGewichtPerStuk)
+               (AVG(?gebruikLandbouwGrond) AS ?avgGebruikLandbouwGrond)
+               (AVG(?koolstofVoetafdruk) AS ?avgKoolstofVoetafdruk)
+               (AVG(?WaterGebruik) AS ?avgWaterGebruik)
+        WHERE {
+            ?s rdf:type gido:Glove ;
+               ns1:Netto_gewicht_per_stuk__kg_ ?nettoGewichtPerStuk ;
+               ns1:Gebruik_landbouwgrond__m2___kg_ ?gebruikLandbouwGrond ;
+               ns1:Koolstofvoetafdruk__CO2_eq___kg_ ?koolstofVoetafdruk ;
+               ns1:Water_gebruik__m3___kg_ ?WaterGebruik .
+        }
+    }
+}
+""" ;
+    schema:target <http://localhost:7200/sparql> .
