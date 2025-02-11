@@ -5,7 +5,7 @@
 
 ex:001 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find URIs stored as Literals"@en ;
+    rdfs:comment "Find SnomedURIs stored as Literals"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
