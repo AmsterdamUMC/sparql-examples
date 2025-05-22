@@ -1,0 +1,32 @@
+@prefix ex: <https://www.bgee.org/sparql/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix ordo:<http://www.orpha.net/ORDO/> .
+@prefix w3: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:001 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Basic query to link associated record from REDCap and Omero both in AHRI"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX steyn: <http://steynlab.ahri.org/identifiers/>
+PREFIX redcap: <http://steynlab.ahri.org/redcap/>
+PREFIX omero: <http://www.openmicroscopy.org/Schemas/OME/2016-06#>
+select * where {
+    ?redcap dc:identifier ?o ;
+            rdf:type redcap:record .
+    {?omero dc:identifier ?o ;
+        rdf:type omero:Project }
+    UNION
+    {?omero dc:identifier ?o ;
+            rdf:type omero:Image }
+
+} """ ;
+    schema:keywords "Tuberculosis"@en ;
+    schema:keywords "AHRI"@en ;
+    schema:keywords "REDCap"@en ;
+    schema:keywords "Omero"@en ;
+    schema:target <http://localhost:7200/sparql> .
+
