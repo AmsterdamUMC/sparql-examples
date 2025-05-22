@@ -14,16 +14,21 @@ PREFIX dc: <http://purl.org/dc/elements/1.1/>
 PREFIX steyn: <http://steynlab.ahri.org/identifiers/>
 PREFIX redcap: <http://steynlab.ahri.org/redcap/>
 PREFIX omero: <http://www.openmicroscopy.org/Schemas/OME/2016-06#>
-select * where {
+
+SELECT * WHERE {
     ?redcap dc:identifier ?o ;
             rdf:type redcap:record .
-    {?omero dc:identifier ?o ;
-        rdf:type omero:Project }
-    UNION
-    {?omero dc:identifier ?o ;
-            rdf:type omero:Image }
 
-} """ ;
+    {
+        ?omero dc:identifier ?o ;
+               rdf:type omero:Project .
+    }
+    UNION
+    {
+        ?omero dc:identifier ?o ;
+               rdf:type omero:Image .
+    }
+}""" ;
     schema:keywords "Tuberculosis"@en ;
     schema:keywords "AHRI"@en ;
     schema:keywords "REDCap"@en ;
