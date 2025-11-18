@@ -1,4 +1,4 @@
-# SIB SPARQL examples
+# AmsterdamUMC SPARQL examples
 
 We collect the SPARQL examples in different formats,
 for different projects of the SIB Swiss Institute of Bioinformatics where we
