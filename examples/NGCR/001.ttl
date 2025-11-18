@@ -8,7 +8,7 @@ ex:001 a sh:SPARQLExecutable,
     rdfs:comment "calculated the distance to the nearest park from one point"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
-        PPREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 PREFIX osmkey: <https://www.openstreetmap.org/wiki/Key:>
 
