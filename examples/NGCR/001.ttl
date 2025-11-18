@@ -1,0 +1,38 @@
+@prefix ex: <https://www.bgee.org/sparql/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:001 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "calculated the distance to the nearest park from one point"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+        PPREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX osmkey: <https://www.openstreetmap.org/wiki/Key:>
+
+PREFIX unit: <http://qudt.org/vocab/unit/>
+SELECT ?way ?name ?distance ?geom_for_distance
+WHERE {
+    BIND("POINT (4.895168 52.370216)"^^geo:wktLiteral AS ?origin)
+
+    ?way osmkey:leisure "park" .
+    ?way osmkey:name ?name .
+    ?way geo:hasGeometry/geo:asWKT ?geom .
+
+    # 判断 geometry 类型，如果是 Point 用自身，否则用 centroid
+    BIND(
+        IF( STRSTARTS(STR(?geom), "POINT"),
+            ?geom,
+            geof:centroid(?geom)
+        ) AS ?geom_for_distance
+    )
+
+    BIND( geof:distance(?origin, ?geom_for_distance) AS ?distance )
+}
+ORDER BY ASC(?distance) 
+LIMIT 5
+""" ;
+    schema:target <https://qlever.dev/osm-planet/NVqOUP> ;
+    schema:author "Yang, X. (Xi)" .
