@@ -1,0 +1,21 @@
+@prefix ex: <http://example.org/sparql-examples/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ordo: <http://www.orpha.net/ORDO/Orphanet_> .
+ 
+ex:ordoMappings
+  a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  rdfs:label "Analyze mapping properties of ORDO disease"@en ;
+  rdfs:comment """
+This query retrieves all external references (hasDbXref) for the ORDO disease orphanet:91546 (Lyme disease).
+It helps to analyze links from ORDO to external databases and understand cross-references.
+"""@en ;
+  sh:select """
+PREFIX orphanet: <http://www.orpha.net/ORDO/Orphanet_>
+PREFIX oio: <http://www.geneontology.org/formats/oboInOwl#>
+ 
+SELECT ?object
+WHERE { 
+  orphanet:91546 oio:hasDbXref ?object .
+}
+""" .
