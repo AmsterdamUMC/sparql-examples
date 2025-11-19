@@ -8,5 +8,5 @@ In this github pages we have a HTML rendering for all them.
 
  * [GIDO](./examples/GIDO/)
  * [NGCR](./examples/NGCR/)
- * [Lyme disease](./examples/lyme-disease/)
+ * [Lyme_disease](./examples/lyme-disease/)
 
