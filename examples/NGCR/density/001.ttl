@@ -1,0 +1,41 @@
+@prefix ex: <https://www.bgee.org/sparql/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:001 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Park density in the radius around person's regular visiting places add optional in order to include all values, even if there is no parks, or ?start is no existing."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+
+#https://qlever.dev/osm-planet/MUADuu
+PREFIX osmKey: <https://www.openstreetmap.org/wiki/Key:>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX osmkey: <https://www.openstreetmap.org/wiki/Key:>
+
+SELECT ?zipcode_start
+    (COUNT(?park) AS ?parkCount)
+    (IF(COUNT(?park)=0, 0, COUNT(?park)/(3.14*500*500)) AS ?parkDensity)
+WHERE {
+    # 确保每个邮编都有行
+    VALUES ?zipcode_start {'1033SC' '1095MS' '1012AB'}
+
+    # 可选的起点节点
+    OPTIONAL { ?start osmKey:addr:postcode ?zipcode_start ;
+                   osmKey:name ?name_start ;
+                   geo:hasGeometry ?geom_start .
+               ?geom_start geo:asWKT ?wkt_start .
+
+               # 可选的公园节点
+               OPTIONAL { ?park osmkey:leisure "park" ;
+                                geo:hasGeometry/geo:asWKT ?park_geometry .
+                          FILTER(geof:distance(?wkt_start, ?park_geometry) < 500)
+              }
+             }
+      }
+GROUP BY ?zipcode_start
+ORDER BY ?zipcode_start
+""" ;
+    schema:target <https://qlever.dev/osm-planet/> .
