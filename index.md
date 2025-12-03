@@ -8,5 +8,5 @@ In this github pages we have a HTML rendering for all them.
 
  * [GIDO](./examples/GIDO/)
  * [Neighbourhood geo-referenced context](./examples/Neighbourhood geo-referenced context/)
- * [Lyme_disease](./examples/lyme-disease/)
+ * [Lyme disease](./examples/lyme-disease/)
 
