@@ -7,6 +7,6 @@ have a public SPARQL endpoint.
 In this github pages we have a HTML rendering for all them.
 
  * [GIDO](./examples/GIDO/)
- * [Neighbourhood geo-referenced context](./examples/Neighbourhood geo-referenced context/)
+ * [NGRC](./examples/Neighbourhood geo-referenced context/)
  * [Lyme disease](./examples/lyme-disease/)
 
