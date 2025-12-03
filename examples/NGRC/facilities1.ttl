@@ -5,12 +5,8 @@
 
 ex:ngrc_facilities1 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Number
-# facility type: dwelling(building=residential),leisure(leisure=*), bank(amenity=bank), shop(landuse=shop/commercial),
-# park(leisure=park), private leisure facility, non-residential land use, point of interest.
-
-#-----------------------------------------------------------------------------------------------------------------------
-# Park number in the radius around person's regular visiting places
+    rdfs:comment "Number facility type: dwelling(building=residential),leisure(leisure=*), bank(amenity=bank), shop(landuse=shop/commercial),
+ park(leisure=park), private leisure facility, non-residential land use, point of interest Park number in the radius around person's regular visiting places
 # add optional in order to include all values, even if there is no parks, or ?start is no existing."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
