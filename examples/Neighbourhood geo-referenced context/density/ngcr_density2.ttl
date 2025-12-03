@@ -1,0 +1,51 @@
+@prefix ex: <https://www.semscape.org/amsterdamumc/sparql/ngrc/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:ngrc_density2 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Park density in PC4 of person's regular visiting places"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+PREFIX osmKey: <https://www.openstreetmap.org/wiki/Key:>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX osmkey: <https://www.openstreetmap.org/wiki/Key:>
+PREFIX osmrel: <https://www.openstreetmap.org/relation/>
+PREFIX ogc: <http://www.opengis.net/rdf#>
+PREFIX osm2rdf: <https://osm2rdf.cs.uni-freiburg.de/rdf#>
+SELECT ?postcode4 ?total_area ?parkCount ((?parkCount/?total_area)AS ?park_density)
+    WHERE {
+    #if we have the specific locations of person's regular visiting places
+    #VALUES ?postcode4_temp {'1033' '1095' '1012'}
+    # calculate the area of postcode 4
+    {
+      SELECT ?postcode4 (SUM(?area) AS ?total_area)
+          WHERE {
+             osmrel:47811 ogc:sfContains ?way1 .
+             ?way1 osmkey:addr:postcode ?p1 .
+             FILTER(REGEX(?p1, "^[0-9]{4}")) .
+             BIND(SUBSTR(?p1,1,4) AS ?postcode4) .
+             #if we have the specific locations of person's regular visiting places
+             #FILTER(?postcode4_temp = ?postcode4 )
+             ?way1 osm2rdf:area ?area .
+             }
+      GROUP BY ?postcode4
+      }
+      # calculate the count of the parks in postcode 4
+    OPTIONAL {
+             ?park osmkey:leisure "park" .
+             #if we have the specific locations of person's regular visiting places
+             #?park osmkey:addr:postcode ?p_park .
+             #BIND(SUBSTR(?p_park,1,4) AS ?postcode4) .
+             #FILTER(?postcode4_temp = ?postcode4) .
+             ?park geo:hasGeometry/geo:asWKT ?park_geometry .
+          }
+
+    }
+}
+ORDER BY DESC(?park_density)
+
+""" ;
+    schema:target <https://qlever.dev/osm-planet/> .

@@ -1,9 +1,9 @@
-@prefix ex: <https://www.bgee.org/sparql/.well-known/sparql-examples/> .
+@prefix ex: <https://www.semscape.org/amsterdamumc/sparql/ngrc/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:001 a sh:SPARQLExecutable,
+ex:ngrc_density1 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Park density in the radius around person's regular visiting places add optional in order to include all values, even if there is no parks, or ?start is no existing."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
