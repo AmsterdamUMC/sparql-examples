@@ -1,0 +1,36 @@
+@prefix ex: <https://www.semscape.org/amsterdamumc/sparql/ngrc/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:ngrc_facilities3 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Park number in PC4 of person's regular visiting places"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+PREFIX osmKey: <https://www.openstreetmap.org/wiki/Key:>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX osmkey: <https://www.openstreetmap.org/wiki/Key:>
+PREFIX osmrel: <https://www.openstreetmap.org/relation/>
+PREFIX ogc: <http://www.opengis.net/rdf#>
+PREFIX osm2rdf: <https://osm2rdf.cs.uni-freiburg.de/rdf#>
+SELECT ?postcode4 (COUNT(?park) AS ?parkCount)
+WHERE {
+  VALUES ?postcode4 { "1033" "1095" "1012" }
+  OPTIONAL {
+      ?park osmkey:leisure "park" ;
+            osmkey:addr:postcode ?p_park ;
+            geo:hasGeometry/geo:asWKT ?park_geometry.
+      BIND(SUBSTR(?p_park, 1, 4) AS ?pc4_park)
+      FILTER(?pc4_park = ?postcode4)
+  }
+}
+GROUP BY ?postcode4
+ORDER BY DESC(?parkCount)
+""" ;
+    schema:target <https://qlever.dev/osm-planet/> .
+
+
+
+

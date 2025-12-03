@@ -1,0 +1,36 @@
+@prefix ex: <https://www.semscape.org/amsterdamumc/sparql/ngrc/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:ngrc_facilities5 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Park density in PC6"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+PREFIX osmKey: <https://www.openstreetmap.org/wiki/Key:>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX osmkey: <https://www.openstreetmap.org/wiki/Key:>
+PREFIX osmrel: <https://www.openstreetmap.org/relation/>
+PREFIX ogc: <http://www.opengis.net/rdf#>
+PREFIX osm2rdf: <https://osm2rdf.cs.uni-freiburg.de/rdf#>
+SELECT ?postcode6 (COUNT(?park) AS ?parkCount)
+WHERE {
+  VALUES ?postcode6 { "1033SC" "1095MS" "1012AB" }
+  OPTIONAL {
+      ?park osmkey:leisure "park" ;
+            osmkey:addr:postcode ?p_park ;
+            geo:hasGeometry/geo:asWKT ?park_geometry.
+      BIND(SUBSTR(?p_park, 1, 6) AS ?pc6_park)
+      FILTER(?pc6_park = ?postcode6)
+  }
+}
+GROUP BY ?postcode6
+ORDER BY DESC(?parkCount)
+""" ;
+    schema:target <https://qlever.dev/osm-planet/> .
+
+
+
+

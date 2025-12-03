@@ -1,0 +1,33 @@
+
+@prefix ex: <https://www.semscape.org/amsterdamumc/sparql/ngrc/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:ngrc_facilities2 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "TODO"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+Select (COUNT(?x) AS ?amenityCount)
+WHERE{
+         ?s
+         owl:sameAs <http://dbpedia.org/resource/Leipzig_Hauptbahnhof> ;
+         geom:geometry [
+         ogc:asWKT ?sg
+         ] .
+
+         ?x
+         a lgdo:Amenity ;
+         rdfs:label ?l ;
+         geom:geometry [
+         ogc:asWKT ?xg
+                   ] .
+         Filter(bif:st_intersects (?sg, ?xg, 0.1)) .
+         }
+""" ;
+    schema:target <https://qlever.dev/osm-planet/> .
+
+
+
+
