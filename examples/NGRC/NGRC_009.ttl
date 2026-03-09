@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:ngrc_density3 a sh:SPARQLExecutable,
+ex:NGRC_009 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Park density in PC6"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
