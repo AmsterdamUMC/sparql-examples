@@ -8,9 +8,13 @@ ex:NGRC_003 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "TODO"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
-    sh:select """PREFIX owl: 
+    sh:select """PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX geom: <http://geovocab.org/geometry#>
+PREFIX ogc:  <http://www.opengis.net/ont/geosparql#>
+PREFIX lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX bif:  <http://www.openlinksw.com/schemas/bif#> 
     
-Select (COUNT(?x) AS ?amenityCount)
+SELECT (COUNT(?x) AS ?amenityCount)
 WHERE{
          ?s
          owl:sameAs <http://dbpedia.org/resource/Leipzig_Hauptbahnhof> ;
