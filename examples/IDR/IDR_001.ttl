@@ -1,0 +1,25 @@
+@prefix ex: <https://www.amsterdamumc.nl/NS/sparqlExamples/
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix w3: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:IDR_001 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "All organisms covered on the IDR?"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX core: <https://ld.openmicroscopy.org/core/>
+
+SELECT DISTINCT ?organism WHERE {
+  ?ann a core:MapAnnotation .
+  ?ann core:mapEntry ?entry .
+  ?entry core:key ?key ;
+         core:value ?organism .
+  FILTER(LCASE(?key) = "organism")
+}
+ORDER BY ?organism
+""" ;
+    schema:keywords "IDR"@en ;
+    schema:keywords "Omero"@en ;
+    schema:keywords "Imaging"@en ;
+    schema:target <http://localhost:7200/sparql> .
