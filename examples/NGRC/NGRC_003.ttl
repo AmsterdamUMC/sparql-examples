@@ -4,11 +4,12 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:ngrc_facilities2 a sh:SPARQLExecutable,
+ex:NGRC_003 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "TODO"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
-    sh:select """
+    sh:select """PREFIX owl: 
+    
 Select (COUNT(?x) AS ?amenityCount)
 WHERE{
          ?s
