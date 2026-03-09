@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:001 a sh:SPARQLExecutable,
+ex:NGRC_001 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "calculated the distance to the nearest park from one point"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
