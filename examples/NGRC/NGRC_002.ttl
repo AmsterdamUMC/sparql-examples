@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:ngrc_facilities1 a sh:SPARQLExecutable,
+ex:NGRC_002 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Number facility type: dwelling(building=residential),leisure(leisure=*), bank(amenity=bank), shop(landuse=shop/commercial),
  park(leisure=park), private leisure facility, non-residential land use, point of interest Park number in the radius around person's regular visiting places
