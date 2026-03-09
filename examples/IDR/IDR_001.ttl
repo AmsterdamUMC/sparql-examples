@@ -1,4 +1,4 @@
-@prefix ex: <https://www.amsterdamumc.nl/NS/sparqlExamples/
+@prefix ex: <https://www.amsterdamumc.nl/NS/sparqlExamples/>
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
